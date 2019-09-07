@@ -6,15 +6,16 @@ namespace Teste_GPS.Domain.Entities
 {
     public class Empresa
     {
-        public List<Atividade> AtividadePrincipal { get; set; }
+        public int Id { get; set; }
+        public virtual List<Atividade> AtividadePrincipal { get; set; }
         public string DataSituacao { get; set; }
         public string Complemento { get; set; }
         public string Nome { get; set; }
         public string Uf { get; set; }
         public string Telefone { get; set; }
         public string Email { get; set; }
-        public List<Atividade> AtividadesSecundarias { get; set; }
-        public List<Qsa> Qsa { get; set; }
+        public virtual List<Atividade> AtividadesSecundarias { get; set; }
+        public virtual List<Qsa> Qsa { get; set; }
         public string Situacao { get; set; }
         public string Bairro { get; set; }
         public string Logradouro { get; set; }

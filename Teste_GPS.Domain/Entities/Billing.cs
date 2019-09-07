@@ -8,6 +8,7 @@ namespace Teste_GPS.Domain.Entities
 {
    public class Billing
     {
+        public int Id { get; set; }
         public bool Free { get; set; }
         public bool Database { get; set; }
     }
