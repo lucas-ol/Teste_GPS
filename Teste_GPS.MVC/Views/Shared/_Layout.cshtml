@@ -3,11 +3,16 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>_Layout</title>
+    <title>
+        @ViewBag.Title
+    </title>
+    <link href="~/css/Main.css" rel="stylesheet" />
+    <script src="~/js/lib/Vue.js"></script>
 </head>
 <body>
     <div>
-        @{RenderBody()}
+        @RenderBody()
     </div>
+    <script src="~/js/Main.js"></script>
 </body>
 </html>

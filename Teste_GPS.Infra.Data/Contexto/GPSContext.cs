@@ -20,12 +20,19 @@ namespace Teste_GPS.Infra.Data.Contexto
         public DbSet<Empresa> Empresas { get; set; }
         public DbSet<Atividade> Atividades { get; set; }
         public DbSet<Billing> Billings { get; set; }
+        public DbSet<Qsa> Qsas  { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+
+            modelBuilder.Properties<string>().Configure(x => x.HasMaxLength(100));
+
+            modelBuilder.Configurations.Add(new EntityConfig.EmpresaConfiguration());
+            modelBuilder.Configurations.Add(new EntityConfig.QsaConfiguration());
+            modelBuilder.Configurations.Add(new EntityConfig.AtividadeConfiguration());
         }
     }
 }

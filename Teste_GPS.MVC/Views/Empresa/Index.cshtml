@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Empresas";
+}
+
+<div id="empresa">
+    <form>
+        <h1 v-if="empresas.length > 0">Empresas Adicionadas</h1>
+        <div v-for="empresa in empresas" v-if="empresas.length > 0">
+            <input type="text" v-bind:value="empresa.cnpj" />
+        </div>
+
+        <h1 v-if="empresasFila.length > 0">Fila</h1>
+        <div v-for="empresa in empresasFila" v-if="empresasFila.length > 0">
+            {{empresa.cnpj}}
+            <div v-if="empresa.isLoading">
+                <div class="lds-ring small"><div></div><div></div><div></div><div></div></div>
+            </div>
+            {{empresa.menssage}}
+        </div>
+
+        <input type="text" name="name" v-model="cnpj" v-mask="'##.###.###/####-##'" placeholder="'##.###.###/####-##'" />
+
+        <input type="button" name="name" value="Adicionar" v-on:click="FindCnpj" />
+    </form>
+</div>
+
+<script src="~/js/lib/vue-the-mask.js"></script>
+<script src="~/js/ViewModel/empresa.js"></script>

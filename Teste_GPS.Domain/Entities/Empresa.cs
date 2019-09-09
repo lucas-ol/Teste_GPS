@@ -1,4 +1,5 @@
 ﻿
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -16,6 +17,7 @@ namespace Teste_GPS.Domain.Entities
         public string Email { get; set; }
         public virtual List<Atividade> AtividadesSecundarias { get; set; }
         public virtual List<Qsa> Qsa { get; set; }
+       
         public string Situacao { get; set; }
         public string Bairro { get; set; }
         public string Logradouro { get; set; }
@@ -35,8 +37,7 @@ namespace Teste_GPS.Domain.Entities
         public string SituacaoEspecial { get; set; }
         public string DataSituacaoEspecial { get; set; }
         public string CapitalSocial { get; set; }
-        public Billing Billing { get; set; }
-
+        public virtual Billing Billing { get; set; }
         public DateTime DataCadastro { get; set; }
 
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Teste_GPS.Domain.Entities
 {
-   public class Qsa
+    public class Qsa
     {
         public int Id { get; set; }
         public string Qual { get; set; }

@@ -135,4 +135,4 @@ _[Ss]cripts
 *.nupkg
 *.ncrunchsolution
 *.dot[Cc]over
-/Teste_GPS.MVC/App_Data/*.mdf
+
