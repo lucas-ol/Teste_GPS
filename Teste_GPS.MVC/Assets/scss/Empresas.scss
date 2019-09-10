@@ -14,3 +14,50 @@
         }
     }
 }
+
+.detalhe {
+    padding: 20px;
+    background-color: white;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    top: 0;
+    display: block;
+    left: 0;
+    overflow-y: scroll;
+
+    &.active {
+        opacity: 1;
+        position: fixed;
+        height: 100%;
+        width: 100%;
+    }
+
+    & > .close {
+        cursor: pointer;
+        font-weight: 900;
+        display: block;
+        float: right;
+        font-size: 40px
+    }
+
+    .qsa {
+        ol {
+            li {
+                margin-top: 5px;
+            }
+        }
+    }
+}
+
+.listagem {
+    margin: 20px;
+
+    & .item {
+        margin: 20px 0;
+        border: 1px solid black;
+
+        .btn {
+            margin: 5px;            
+        }
+    }
+}

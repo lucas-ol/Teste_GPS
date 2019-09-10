@@ -10,6 +10,7 @@
 <div id="empresa">
     <form v-on:submit.prevent="Cadastrar">
         <div class="row">
+            <div class="col-md-12"> Adicione os CNPJs e depois envie</div>
             <div class="col-md-12">
                 <input type="text" name="name" v-model="cnpj" v-mask="'##.###.###/####-##'" placeholder="00.000.000/0000-00" />
                 <input type="button" name="name" value="Adicionar" v-on:click="FindCnpj" class="btn black" />
@@ -32,18 +33,79 @@
                     <span class="cnpj">{{empresa.cnpj}}</span>
                     <div class="lds-ring small" v-if="empresa.loading"><div></div><div></div><div></div><div></div></div>
                     <span v-bind="{title:empresa.Message}" v-if="empresa.Message != ''" class="icon erro"></span>
-
                 </div>
             </div>
         </div>
+        
+        <div class="listagem">
+            <h1 v-if="empresasCadastradas.length > 0">Lista de empresas Cadastradas</h1>
+            <div v-for="empresa in empresasCadastradas" v-if="empresasCadastradas.length > 0" class="item">
+                <div>{{empresa.Cnpj}}</div>
+                <div>{{empresa.Nome}}</div>
+                <div>{{empresa.Email}}</div>
+                <a class="btn black" v-on:click="CarregarDetalhe(empresa)">Detalhe</a>
 
-        <div v-for="empresa in empresasCadastradas" v-if="empresasCadastradas.length > 0">
-            <span type="text">{{empresa.Cnpj}}</span>
-            <span type="text">{{empresa.Nome}}</span>
-            <span type="text">{{empresa.Email}}</span>
-            <div v-if="isLoading">
+            </div>
+            <div v-if="isLoadingList">
                 <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
             </div>
+        </div>
+        <div class="detalhe" v-if="empresaDestaque.Cnpj" v-bind:class="{active :empresaDestaque.Cnpj}">
+            <a class="close" v-on:click="FecharDetalhe">&times;</a>
+
+            <div class="content container">
+                <h1>{{empresaDestaque.Nome}}</h1>
+                <div ><small>{{empresaDestaque.Cnpj}}</small></div>
+
+                <div>Email: {{empresaDestaque.Email}}</div>
+
+                <div>Fantasia:{{empresaDestaque.Fantasia}}</div>
+                <div> Bairro: {{empresaDestaque.Bairro}}</div>
+                <div>CapitalSocial: {{empresaDestaque.CapitalSocial}}</div>
+                <div> Cep:{{empresaDestaque.Cep}}</div>
+
+                <div> Complemento:{{empresaDestaque.Complemento}}</div>
+
+
+
+                <div>Logradouro:{{empresaDestaque.Email}}</div>
+
+                <div>  Municipio:{{empresaDestaque.Municipio}}</div>
+
+
+                <div>Numero: {{empresaDestaque.Numero}}</div>
+                <div>  Porte:{{empresaDestaque.Porte}}</div>
+                <div> Situacao:{{empresaDestaque.Situacao}}</div>
+
+                <div>  Status:{{empresaDestaque.Status}}</div>
+                <div>Telefone:{{empresaDestaque.Telefone}}</div>
+                <div> Tipo:{{empresaDestaque.Tipo}}</div>
+                <div>Estado: {{empresaDestaque.Uf}}</div>
+
+                <div class="qsa">
+                    <h3>QSA</h3>
+                    <ol>
+                        <li v-for="qsa in empresaDestaque.Qsa">
+                            Cargo: {{qsa.Qual}}<br />
+                            Nome:{{qsa.Nome}}
+                        </li>
+                    </ol>
+                </div>
+
+                <div>
+                    <h3>Atividades Principais</h3>
+                    <ul>
+                        <li v-for="atividade in empresaDestaque.AtividadePrincipal">{{atividade.Text}}</li>
+                    </ul>
+                    <div>
+                        <h3>Atividade Secundarias</h3>
+                        <ol>
+                            <li v-for="atividade in empresaDestaque.AtividadesSecundarias">{{atividade.Text}}</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </form>
 </div>

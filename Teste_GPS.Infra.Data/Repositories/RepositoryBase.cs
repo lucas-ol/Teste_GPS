@@ -7,7 +7,7 @@ using Teste_GPS.Infra.Data.Contexto;
 
 namespace Teste_GPS.Infra.Data.Repositories
 {
-    public abstract class RepositoryBase<TEntity> : IDisposable, Domain.Interfaces.IRepositoryBase<TEntity> where TEntity : class
+    public class RepositoryBase<TEntity> : IDisposable, Domain.Interfaces.IRepositoryBase<TEntity> where TEntity : class
     {
         public void Add(TEntity obj)
         {
@@ -27,16 +27,15 @@ namespace Teste_GPS.Infra.Data.Repositories
         {
             using (var ctx = new GPSContext())
             {
-                return ctx.Set<TEntity>().AsNoTracking().Take(QTDE).ToList();
+                return ctx.Set<TEntity>().Take(QTDE).ToList();
             }
         }
         public IEnumerable<TEntity> GetAll()
         {
-            using (var ctx = new GPSContext())
-            {
-                return ctx.Set<TEntity>().AsNoTracking().ToList();
-            }
+            var ctx = new GPSContext();
+            return ctx.Set<TEntity>().ToList();
         }
+
         public TEntity GetById(int id)
         {
             using (var ctx = new GPSContext())

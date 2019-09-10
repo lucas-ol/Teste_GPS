@@ -37,10 +37,10 @@ function () {
       var xhr = new XMLHttpRequest();
 
       xhr.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          callback(JSON.parse(this.responseText));
-        } else {
-          callback([]);
+        if (this.readyState == 4) {
+          if (this.status == 200) callback(JSON.parse(this.responseText));else {
+            callback([]);
+          }
         }
       };
 
@@ -110,7 +110,10 @@ var vwEmpresa = new Vue({
     cnpj: '',
     empresas: [],
     empresasFila: [],
-    empresasCadastradas: []
+    empresasCadastradas: [],
+    empresaDestaque: {},
+    isLoadingList: false,
+    isLoading: false
   },
   methods: {
     addFila: function addFila(cnpj) {
@@ -137,22 +140,18 @@ var vwEmpresa = new Vue({
         this.addFila(cnpj);
         empresa.FindCnpj(this.cnpj, function (json) {
           /*Mantem o valor em memoria*/
-          if (json.Situacao == "ATIVA") {
-            _this.empresasFila = _this.empresasFila.filter(function (value) {
-              value.cnpj != json.Cnpj;
-            });
+          _this.empresasFila = _this.empresasFila.filter(function (value) {
+            value.cnpj !== json.Cnpj;
+          });
 
-            _this.empresas.push(json);
+          _this.empresas.push(json);
 
-            _this.cnpj = "";
-          } else {
-            _this.setErromessageCnpj(json.Message, cnpj);
-          }
+          _this.cnpj = "";
         }, function (json) {
           _this.setErromessageCnpj(json.Message, cnpj);
         });
       } else {
-        setErromessageCnpj('CNPJ Invalido', this.cnpj);
+        this.setErromessageCnpj('CNPJ Invalido', this.cnpj);
       }
     },
     setErromessageCnpj: function setErromessageCnpj(msg, cnpj) {
@@ -164,6 +163,8 @@ var vwEmpresa = new Vue({
       });
     },
     Cadastrar: function Cadastrar() {
+      var _this2 = this;
+
       var empresa = new Empresa();
 
       if (this.empresas.length == 0) {
@@ -171,29 +172,38 @@ var vwEmpresa = new Vue({
         return;
       }
 
+      this.isLoading = true;
       empresa.Cadastrar(this.empresas, function (result) {
         if (result.Status == "OK") {
           alert("Empresas Cadastradas com sucesso");
           window.location.href = window.location.href;
         } else alert(result.Message);
-      });
-    },
-    Listar: function Listar() {
-      var _this2 = this;
-
-      this.isLoading = true;
-      var empresa = new Empresa();
-      empresa.Listar(function (result) {
-        if (result.length > 0) {
-          _this2.empresasCadastradas = result;
-        }
 
         _this2.isLoading = false;
       });
     },
+    Listar: function Listar() {
+      var _this3 = this;
+
+      this.isLoadingList = true;
+      var empresa = new Empresa();
+      empresa.Listar(function (result) {
+        if (result.length > 0) {
+          _this3.empresasCadastradas = result;
+        }
+
+        _this3.isLoadingList = false;
+      });
+    },
+    CarregarDetalhe: function CarregarDetalhe(item) {
+      this.empresaDestaque = item;
+    },
+    FecharDetalhe: function FecharDetalhe() {
+      this.empresaDestaque = {};
+    },
     remover: function remover(empresa) {
       this.empresas = this.empresas.filter(function (item) {
-        return item.Cnpj != empresa.Cnpj;
+        return item.Cnpj !== empresa.Cnpj;
       });
     }
   }

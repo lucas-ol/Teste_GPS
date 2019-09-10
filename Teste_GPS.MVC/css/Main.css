@@ -166,7 +166,9 @@
 
 .button-group { display: flex; }
 
-#main { margin-top: 40px; }
+* { box-sizing: border-box; word-wrap: break-word; }
+
+#main { margin-top: 40px; display: flex; }
 
 .icon.erro { margin-left: 5px; background-color: red; color: white; border-radius: 50%; font-weight: 900; }
 

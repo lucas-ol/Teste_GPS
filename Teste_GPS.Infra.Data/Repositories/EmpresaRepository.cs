@@ -28,5 +28,6 @@ namespace Teste_GPS.Infra.Data.Repositories
                 return ctx.Empresas.FirstOrDefault(x => x.Cnpj == cnpj);
             }
         }
+
     }
 }

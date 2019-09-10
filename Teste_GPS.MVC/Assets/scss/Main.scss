@@ -1,7 +1,13 @@
 ﻿@import 'Components/base';
 
-#main{
-    margin-top:40px;
+* {
+    box-sizing: border-box;
+    word-wrap: break-word;
+}
+
+#main {
+    margin-top: 40px;
+    display: flex;
 }
 
 .icon {
@@ -21,8 +27,7 @@
 }
 
 input[type=text] {
-    padding: 8px;    
+    padding: 8px;
     border: none;
     border: 1px solid #ccc !important;
-    
 }

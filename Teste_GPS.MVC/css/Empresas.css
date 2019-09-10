@@ -1,3 +1,17 @@
 .fila .item > div { display: flex; margin-top: 5px; margin-bottom: 5px; }
 
 .fila .item > div span.cnpj { margin: auto 0; }
+
+.detalhe { padding: 20px; background-color: white; opacity: 0; transition: opacity 1s ease-in-out; top: 0; display: block; left: 0; overflow-y: scroll; }
+
+.detalhe.active { opacity: 1; position: fixed; height: 100%; width: 100%; }
+
+.detalhe > .close { cursor: pointer; font-weight: 900; display: block; float: right; font-size: 40px; }
+
+.detalhe .qsa ol li { margin-top: 5px; }
+
+.listagem { margin: 20px; }
+
+.listagem .item { margin: 20px 0; border: 1px solid black; }
+
+.listagem .item .btn { margin: 5px; }
