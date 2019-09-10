@@ -1,0 +1,3 @@
+.fila .item > div { display: flex; margin-top: 5px; margin-bottom: 5px; }
+
+.fila .item > div span.cnpj { margin: auto 0; }

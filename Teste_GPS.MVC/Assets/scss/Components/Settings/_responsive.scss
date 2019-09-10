@@ -1,0 +1,18 @@
+// Spacing
+$gutter: 18px;
+$half-gutter: ($gutter / 2);
+
+// Grid
+$cols: 12;
+$container-width: 1168px;
+
+// Media queries
+$scr-mobile-xs: 480px;
+$scr-mobile: 768px;
+$scr-tablet: 992px;
+$scr-desktop: 1200px;
+
+$scr-default-prefix: 'xs';
+$scr-mobile-prefix: 'sm';
+$scr-tablet-prefix: 'md';
+$scr-desktop-prefix: 'lg';

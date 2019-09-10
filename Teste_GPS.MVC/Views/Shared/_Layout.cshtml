@@ -2,17 +2,19 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
         @ViewBag.Title
     </title>
     <link href="~/css/Main.css" rel="stylesheet" />
     <script src="~/js/lib/Vue.js"></script>
+    @RenderSection("head",false)
 </head>
 <body>
-    <div>
+    <div class="container" id="main">
         @RenderBody()
     </div>
     <script src="~/js/Main.js"></script>
+    @RenderSection("scripts", false)
 </body>
 </html>

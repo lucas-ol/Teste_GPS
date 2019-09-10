@@ -30,7 +30,13 @@ namespace Teste_GPS.Infra.Data.Repositories
                 return ctx.Set<TEntity>().AsNoTracking().Take(QTDE).ToList();
             }
         }
-
+        public IEnumerable<TEntity> GetAll()
+        {
+            using (var ctx = new GPSContext())
+            {
+                return ctx.Set<TEntity>().AsNoTracking().ToList();
+            }
+        }
         public TEntity GetById(int id)
         {
             using (var ctx = new GPSContext())

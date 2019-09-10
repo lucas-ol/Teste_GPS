@@ -11,11 +11,21 @@ namespace Teste_GPS.Infra.Data.Repositories
 {
     public class EmpresaRepository : RepositoryBase<Empresa>, IEmpresaRepository
     {
-        public void AddRange(IEnumerable<Empresa> empresas) {
+        public void AddRange(IEnumerable<Empresa> empresas)
+        {
             using (var ctx = new GPSContext())
             {
                 ctx.Empresas.AddRange(empresas);
                 ctx.SaveChanges();
+            }
+        }
+
+        public Empresa GetByCNPJ(string cnpj)
+        {
+
+            using (var ctx = new GPSContext())
+            {
+                return ctx.Empresas.FirstOrDefault(x => x.Cnpj == cnpj);
             }
         }
     }

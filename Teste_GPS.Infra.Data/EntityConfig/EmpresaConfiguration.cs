@@ -13,13 +13,11 @@ namespace Teste_GPS.Infra.Data.EntityConfig
         {
             HasKey(x => x.Id);
 
-            Property(x => x.Nome).IsRequired().HasMaxLength(150);
-            Property(x => x.DataCadastro).IsRequired().IsOptional();
+            Property(x => x.Nome).IsRequired().HasMaxLength(150);            
 
-            Property(x => x.Cnpj).IsRequired().HasMaxLength(15);
+            Property(x => x.Cnpj).IsRequired().HasMaxLength(20);
             Property(x => x.Email).IsRequired().HasMaxLength(100);
-            Property(x => x.Cep).IsRequired();
-            
+            Property(x => x.Cep).IsRequired();            
         }
     }
 }

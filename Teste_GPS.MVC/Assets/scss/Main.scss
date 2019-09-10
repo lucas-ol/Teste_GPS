@@ -1,2 +1,28 @@
-﻿@import 'Components/_loader';
+﻿@import 'Components/base';
 
+#main{
+    margin-top:40px;
+}
+
+.icon {
+
+    &.erro {
+        margin-left: 5px;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        font-weight: 900;
+
+        &:after {
+            content: '!';
+            padding: 5px;
+        }
+    }
+}
+
+input[type=text] {
+    padding: 8px;    
+    border: none;
+    border: 1px solid #ccc !important;
+    
+}

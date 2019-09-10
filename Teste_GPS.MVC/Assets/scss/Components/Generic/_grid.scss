@@ -1,0 +1,80 @@
+﻿/**
+ * Sistema de grid responsivo
+ */
+
+/**
+ * Mixin que escreve o grid com base na resolução
+ * @param string $scr: Prefixo
+ */
+@mixin grid($scr) {
+    @for $col from 1 through $cols {
+        $size: ((100% / $cols) * $col);
+		
+		.col-#{$scr}-#{$col} {
+			width: $size;
+		}
+
+		.col-#{$scr}-offset-#{$col} {
+			margin-left: $size;
+		}
+    }
+}
+
+// Containers
+@mixin container-padding {
+	padding-right: $half-gutter;
+	padding-left: $half-gutter;
+}
+
+%container-padding {
+	@include container-padding;
+}
+
+@mixin container {
+	max-width: $container-width;
+	margin-right: auto;
+	margin-left: auto;
+	@include container-padding;
+}
+
+.container {
+	@include container;
+}
+
+.container-fluid {
+	@extend %container-padding;
+}
+
+[class^="col-"],
+[class*=" col-"] {
+    @extend %container-padding;
+    float: left;
+    width: 100%;
+}
+
+// Row
+.row {
+    margin-right: -($half-gutter);
+    margin-left: -($half-gutter);
+
+    &:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+}
+
+// Grid
+$queries: $scr-mobile $scr-tablet $scr-desktop;
+$prefixes: $scr-mobile-prefix $scr-tablet-prefix $scr-desktop-prefix;
+
+@include grid($scr-default-prefix);
+
+@each $query in $queries {
+	$index: index($queries, $query);
+
+	@media screen and (min-width: $query) {
+		$prefix: nth($prefixes, $index);
+		@include grid($prefix);
+	}
+}

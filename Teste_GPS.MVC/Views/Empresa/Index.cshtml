@@ -3,27 +3,51 @@
     ViewBag.Title = "Empresas";
 }
 
+@section head{
+    <link href="~/css/Empresas.css" rel="stylesheet" />
+}
+
 <div id="empresa">
-    <form>
+    <form v-on:submit.prevent="Cadastrar">
+        <div class="row">
+            <div class="col-md-12">
+                <input type="text" name="name" v-model="cnpj" v-mask="'##.###.###/####-##'" placeholder="00.000.000/0000-00" />
+                <input type="button" name="name" value="Adicionar" v-on:click="FindCnpj" class="btn black" />
+            </div>
+            <div class="col-lg-12">
+                <input type="button" name="name" value="Enviar >" v-on:click="Cadastrar" class="btn green" />
+            </div>
+        </div>
+
         <h1 v-if="empresas.length > 0">Empresas Adicionadas</h1>
         <div v-for="empresa in empresas" v-if="empresas.length > 0">
-            <input type="text" v-bind:value="empresa.cnpj" />
+            <span>{{empresa.Cnpj}} - {{empresa.Nome}}</span>
+            <a href="javascript:void(0)" v-on:click="remover(empresa)">Remover</a>
         </div>
 
-        <h1 v-if="empresasFila.length > 0">Fila</h1>
-        <div v-for="empresa in empresasFila" v-if="empresasFila.length > 0">
-            {{empresa.cnpj}}
-            <div v-if="empresa.isLoading">
-                <div class="lds-ring small"><div></div><div></div><div></div><div></div></div>
+        <div class="fila" v-if="empresasFila.length > 0">
+            <h1>Fila</h1>
+            <div v-for="empresa in empresasFila" class="item row">
+                <div class="col-md-12">
+                    <span class="cnpj">{{empresa.cnpj}}</span>
+                    <div class="lds-ring small" v-if="empresa.loading"><div></div><div></div><div></div><div></div></div>
+                    <span v-bind="{title:empresa.Message}" v-if="empresa.Message != ''" class="icon erro"></span>
+
+                </div>
             </div>
-            {{empresa.menssage}}
         </div>
 
-        <input type="text" name="name" v-model="cnpj" v-mask="'##.###.###/####-##'" placeholder="'##.###.###/####-##'" />
-
-        <input type="button" name="name" value="Adicionar" v-on:click="FindCnpj" />
+        <div v-for="empresa in empresasCadastradas" v-if="empresasCadastradas.length > 0">
+            <span type="text">{{empresa.Cnpj}}</span>
+            <span type="text">{{empresa.Nome}}</span>
+            <span type="text">{{empresa.Email}}</span>
+            <div v-if="isLoading">
+                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+            </div>
+        </div>
     </form>
 </div>
-
-<script src="~/js/lib/vue-the-mask.js"></script>
-<script src="~/js/ViewModel/empresa.js"></script>
+@section scripts{
+    <script src="~/js/lib/vue-the-mask.js"></script>
+    <script src="~/js/ViewModel/empresa.js"></script>
+}

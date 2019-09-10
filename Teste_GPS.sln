@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.489
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{0A1DEEE3-4A55-4449-BBE8-E8BCD5A71C07}"
 EndProject
@@ -22,6 +22,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{2A7F3CD3-761B-4A2D-9621-F7F634EE33A4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teste_GPS.Application", "Teste_GPS.Application\Teste_GPS.Application.csproj", "{B129628F-FF0C-4D3C-872F-36EDD316C128}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CrossCutting", "CrossCutting", "{33563D93-0B57-4318-A278-ECB51AC1044A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teste_GPS.Services", "Teste_GPS.Services\Teste_GPS.Services.csproj", "{B90278DF-B478-4E51-9EE6-F72E65EA2706}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,10 @@ Global
 		{B129628F-FF0C-4D3C-872F-36EDD316C128}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B129628F-FF0C-4D3C-872F-36EDD316C128}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B129628F-FF0C-4D3C-872F-36EDD316C128}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B90278DF-B478-4E51-9EE6-F72E65EA2706}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B90278DF-B478-4E51-9EE6-F72E65EA2706}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B90278DF-B478-4E51-9EE6-F72E65EA2706}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B90278DF-B478-4E51-9EE6-F72E65EA2706}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +63,8 @@ Global
 		{D5A78FE4-B5D1-4262-862A-6044AB649CF5} = {0910305C-CEDD-4161-8CF4-8B0FA8E226B3}
 		{9FDE8849-41B5-4FF0-A4F9-BCB665C51EB6} = {A9204DE6-7CE5-4A32-88BF-298B550D1A37}
 		{B129628F-FF0C-4D3C-872F-36EDD316C128} = {2A7F3CD3-761B-4A2D-9621-F7F634EE33A4}
+		{33563D93-0B57-4318-A278-ECB51AC1044A} = {2B9CE6FF-DEC7-471F-BAB6-0FFA9924E0A3}
+		{B90278DF-B478-4E51-9EE6-F72E65EA2706} = {33563D93-0B57-4318-A278-ECB51AC1044A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {229BEBFD-2AFD-4662-ACD2-90FADA3227C3}

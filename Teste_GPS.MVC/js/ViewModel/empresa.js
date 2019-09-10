@@ -16,25 +16,54 @@ function () {
   _createClass(Empresa, [{
     key: "FindCnpj",
     value: function FindCnpj(cnpj, callback, fail) {
-      var jsonp = function jsonp(url, callback) {
-        var callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
+      cnpj = cnpj.replace(/[^\d]+/g, '');
+      var xhr = new XMLHttpRequest();
 
-        window[callbackName] = function (data) {
-          delete window[callbackName];
-          document.body.removeChild(script);
-          callback(data);
-        };
-
-        var script = document.createElement('script');
-        script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + callbackName;
-        document.body.appendChild(script);
+      xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+          if (this.status == 200) callback(JSON.parse(this.responseText));else fail({
+            'Status': 'ERROR',
+            'Message': 'Erro ao se conectar com serviço'
+          });
+        }
       };
 
-      cnpj = cnpj.replace(/[^\d]+/g, ''); // xhr.open('GET', `https://www.receitaws.com.br/v1/cnpj/${cnpj}?callback=jsonp`);
+      xhr.open("GET", "/empresa/ConsultarCNPJAsync?cnpj=".concat(cnpj), true);
+      xhr.send();
+    }
+  }, {
+    key: "Listar",
+    value: function Listar(callback) {
+      var xhr = new XMLHttpRequest();
 
-      jsonp('https://www.receitaws.com.br/v1/cnpj/${cnpj}', function (data) {
-        callback(data);
-      });
+      xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          callback(JSON.parse(this.responseText));
+        } else {
+          callback([]);
+        }
+      };
+
+      xhr.open("GET", "/empresa/Listar", true);
+      xhr.send();
+    }
+  }, {
+    key: "Cadastrar",
+    value: function Cadastrar(empresas, callback) {
+      var xhr = new XMLHttpRequest();
+
+      xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          callback(JSON.parse(this.responseText));
+        }
+      };
+
+      xhr.open("POST", "/empresa/Cadastrar", true);
+      xhr.setRequestHeader("Accept", "application/json");
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(JSON.stringify({
+        empresas: empresas
+      }));
     }
   }, {
     key: "ValidarCnpj",
@@ -81,50 +110,92 @@ var vwEmpresa = new Vue({
     cnpj: '',
     empresas: [],
     empresasFila: [],
-    isLoading: false
+    empresasCadastradas: []
   },
   methods: {
     addFila: function addFila(cnpj) {
       this.empresasFila.push({
-        cnpj: cnpj,
-        isLoading: true
+        loading: true,
+        'cnpj': cnpj,
+        Message: ''
       });
     },
     FindCnpj: function FindCnpj() {
       var _this = this;
 
-      this.isLoading = true;
       var empresa = new Empresa();
+
+      if (this.empresas.map(function (e) {
+        return e.Cnpj;
+      }).indexOf(this.cnpj) >= 0) {
+        alert('CNPJ ja Adicionado');
+        return;
+      }
 
       if (empresa.ValidarCnpj(this.cnpj)) {
         var cnpj = this.cnpj;
         this.addFila(cnpj);
         empresa.FindCnpj(this.cnpj, function (json) {
           /*Mantem o valor em memoria*/
-          if (json.situacao == "ATIVA") {
+          if (json.Situacao == "ATIVA") {
             _this.empresasFila = _this.empresasFila.filter(function (value) {
-              value.cnpj != json.cnpj;
+              value.cnpj != json.Cnpj;
             });
 
             _this.empresas.push(json);
+
+            _this.cnpj = "";
           } else {
-            _this.setErromessageCnpj(json.message, cnpj);
+            _this.setErromessageCnpj(json.Message, cnpj);
           }
-        }, function () {
-          _this.setErromessageCnpj(json, cnpj);
+        }, function (json) {
+          _this.setErromessageCnpj(json.Message, cnpj);
         });
       } else {
-        alert('CNPJ Invalido');
-        this.isLoading = false;
+        setErromessageCnpj('CNPJ Invalido', this.cnpj);
       }
     },
     setErromessageCnpj: function setErromessageCnpj(msg, cnpj) {
       this.empresasFila.forEach(function (item) {
         if (item.cnpj == cnpj) {
-          item.message = msg;
-          item.isLoading = false;
+          item.Message = msg;
+          item.loading = false;
         }
+      });
+    },
+    Cadastrar: function Cadastrar() {
+      var empresa = new Empresa();
+
+      if (this.empresas.length == 0) {
+        alert('Adicione pelo menos 1 CNPJ');
+        return;
+      }
+
+      empresa.Cadastrar(this.empresas, function (result) {
+        if (result.Status == "OK") {
+          alert("Empresas Cadastradas com sucesso");
+          window.location.href = window.location.href;
+        } else alert(result.Message);
+      });
+    },
+    Listar: function Listar() {
+      var _this2 = this;
+
+      this.isLoading = true;
+      var empresa = new Empresa();
+      empresa.Listar(function (result) {
+        if (result.length > 0) {
+          _this2.empresasCadastradas = result;
+        }
+
+        _this2.isLoading = false;
+      });
+    },
+    remover: function remover(empresa) {
+      this.empresas = this.empresas.filter(function (item) {
+        return item.Cnpj != empresa.Cnpj;
       });
     }
   }
 });
+vwEmpresa.Listar();

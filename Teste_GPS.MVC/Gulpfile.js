@@ -72,7 +72,7 @@ gulp.task('compile:css', () => {
 });
 
 
-gulp.task('default', () => {
+gulp.task('watch', () => {
     bs.init({
         proxy: "https://localhost:44336"
     });
@@ -80,6 +80,7 @@ gulp.task('default', () => {
     gulp.watch(paths.css.src, gulp.series('compile:css'));
     gulp.watch(paths.js.src, gulp.series('compile:js'));
     gulp.watch(paths.generalSources).on('change', bs.reload);
-});
 
+});
+gulp.task('default', gulp.series('watch'));
 gulp.task('build', gulp.series('build:css', 'build:js'));
